@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>basic :: Layout Test</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<style>
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, table, dl, dd {
+	margin: 0;
+	padding: 0;
+}
+h1 {
+	font-size: 16px;
+}
+a {
+	text-decoration: none;
+	color: #000;
+}
+ul, ol {
+	list-style: none;
+}
+img {
+	max-width: 100%;
+	vertical-align: top;
+	border: none;
+}
+:root {
+	--swiper-theme-color: #fff;
+}
+body {
+	line-height: 1;
+	font-family: "Open Sans", "Noto Sans KR", sans-serif;
+	font-size: 1em;
+	color: #000;
+}
+
+/* main_slider */
+.main_slider {
+	margin: 0 auto;
+	position: relative;
+	width: 740px;
+	height: 610px;
+	overflow: hidden;
+}
+
+.main_slider .swiper-container {
+	width: 100%;
+	height: 100%;
+}
+
+.main_slider .swiper-container .swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.main_slider .swiper-container .swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.main_slider .controll_area {
+	display: flex;
+	align-items: flex-end;
+	position: absolute;
+	left: 83px;
+	bottom: 82px;
+	z-index: 100;
+}
+
+.main_slider .controll_area .controller {
+	font-size: 0;
+}
+
+.main_slider .controll_area .controller a {
+	display: inline-block;
+	width: 38px;
+	height: 38px;
+	overflow: hidden;
+	text-indent: -9999px;
+	border: 1px solid rgba(225,225,225,0.3);
+	border-left: none;
+}
+
+.main_slider .controll_area .controller a:first-child {
+	border-left: 1px solid rgba(225,225,225,0.3)
+}
+
+.main_slider .controll_area .controller .prev {
+	background: url(images/btn_left_arrow.png) no-repeat;
+}
+
+.main_slider .controll_area .controller .next {
+	background: url(images/btn_right_arrow.png) no-repeat;
+}
+
+#pause_play.pause {
+	background: url(images/btn_pause.png) no-repeat 0 0;
+}
+
+#pause_play.play {
+	background: url(images/btn_play.png) no-repeat 0 0;
+}
+.main_slider .controll_area .account {
+	padding: 12px 20px;
+	font-size: 0.875em;
+	color: #fff;
+}
+.main_slider .controll_area .account .current {
+	font-size: 1em;
+	font-weight: 600;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+$(function(){
+	const mainSwiper = new Swiper(".mainSwiper", {
+		speed: 1200,
+		effect: "fade",
+		fadeEffect: {
+			crossFade: true
+		},
+		
+		loop: true,
+		autoplay: {
+			delay: 4000,
+			disableOnInteraction: false
+		},
+
+		on: {
+			init: function(){
+				$(".main_slider .controll_area .account .current").text(this.realIndex+1);
+				$(".main_slider .controll_area .account .total").text(this.slides.length);
+			},
+			slideChange: function(){
+				$(".main_slider .controll_area .account .current").text(this.realIndex+1);
+			}
+		}
+	});
+
+	$(".main_slider .controll_area .controller .prev").click(function(e){
+		e.preventDefault();
+		mainSwiper.slidePrev();
+	});
+	$(".main_slider .controll_area .controller .next").click(function(e){
+		e.preventDefault();
+		mainSwiper.slideNext();
+	});
+
+	$("#pause_play").click(function(e){
+		e.preventDefault();
+
+		if($(this).hasClass("play")){
+			$(this).removeAttr("class");
+			$(this).addClass("pause");
+			$(this).text("pause");
+			mainSwiper.autoplay.start();
+		}
+		else{
+			$(this).removeAttr("class");
+			$(this).addClass("play");
+			$(this).text("play");
+			mainSwiper.autoplay.stop();
+		}
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrapper">
+	<div class="main_slider">
+		<div class="swiper-container mainSwiper">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide"><img src="images/slider1.jpg" alt="slider1"></div>
+				<div class="swiper-slide"><img src="images/slider2.jpg" alt="slider2"></div>
+				<div class="swiper-slide"><img src="images/slider3.jpg" alt="slider3"></div>
+				<div class="swiper-slide"><img src="images/slider4.jpg" alt="slider4"></div>
+				<div class="swiper-slide"><img src="images/slider5.jpg" alt="slider5"></div>
+				<div class="swiper-slide"><img src="images/slider6.jpg" alt="slider6"></div>
+				<div class="swiper-slide"><img src="images/slider7.jpg" alt="slider7"></div>
+				<div class="swiper-slide"><img src="images/slider8.jpg" alt="slider8"></div>
+			</div>
+		</div>
+		<div class="controll_area">
+			<div class="controller">
+				<a href="" class="prev">previous</a>
+				<a href="" class="next">next</a>
+				<a href="" id="pause_play" class="pause">pause</a>
+			</div>
+			<div class="account">
+				<span class="current">current</span> / <span class="total">total</span>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
